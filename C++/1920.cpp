@@ -36,7 +36,7 @@ int main(){
     }*/
 
     // 이분탐색 직접 구현 코드
-    f/*or(int i=0; i<M; i++) {
+    /*for(int i=0; i<M; i++) {
         cin >> req;
         int start = 0, end = N-1, mid = (start+end)/2;
         while (start <= end) {
