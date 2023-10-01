@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  * 2. 0인 경우는 탐색을 건너뛰고 (continue), 방문하지 않은 1인 경우는 chk를 true로 하여 DFS 탐색 알고리즘 이후 count를 증가시킵니다. 방문한 1일 경우는 chk를 false로 바꿉니다.
  * 3. 최종 count 값을 출력합니다.
  *
- * 시간복잡도: O(h^2*w^2) -> for문 O(h*w), bfs탐색 알고리즘 최악의 경우 O(h*w)이므로 시간복잡도는 O(h^2*w^2)
+ * 시간복잡도: O(h*w) -> for문 O(h*w), bfs탐색 알고리즘 최악의 경우 O(h*w)인데 이중 for문 안에서 같이 비례하므로 O(h*w)
  * 공간복잡도: O(h*w)
  *
  */
