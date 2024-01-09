@@ -1,0 +1,48 @@
+/**
+ * - 이분 탐색 반복문/재귀 알고리즘 구현
+ *
+ * - 참고: https://velog.io/@suk13574/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%9D%B4%EB%B6%84-%ED%83%90%EC%83%89-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-Binary-Search
+ */
+
+
+class BinarySearch{
+    private int left;
+    private int right;
+    private int mid;
+    static int[] arr;
+
+    public BinarySearch(int n) {
+        this.left = 0;
+        this.right = n-1;
+        arr = new int[n];
+    }
+
+    public boolean BinarySearchLoop(int n){
+        while(left <= right){
+            mid = (left + right) / 2;
+            if(arr[mid] < n){
+                left = mid +1;
+            }else if(arr[mid] > n){
+                right = mid -1;
+            }else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean BinarySearchRecursive(int n, int left, int right){
+        if(left > right){
+            return false;
+        }
+        mid = (left + right) / 2;
+        if(arr[mid] < n){
+            return BinarySearchRecursive(n,mid+1, right);
+        }else if(arr[mid] > n){
+            return BinarySearchRecursive(n, left, mid-1);
+        }else{
+            return true;
+        }
+    }
+}
