@@ -1,0 +1,99 @@
+
+/**
+ * - 다익스트라와 다르게 벨만포드는 음수 가중치를 허용한다
+ * - 따라서 음수 사이클이 발생할 수 있고 음수 사이클이 발생하면 최단거리를 구한 수 없는 그래프가 된다
+ * - 다익스트라는 정점을 기준으로 하나, 벨만포드는 간선을 기준으로 탐색한다
+ * - 학습 출처: https://velog.io/@suk13574/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98Java-%EB%B2%A8%EB%A7%8C-%ED%8F%AC%EB%93%9CBellman-Ford-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
+ */
+
+class Edge{
+    int v; // 나가는 정점
+    int w; // 들어오는 정점
+    int cost;
+
+    public Edge(int v, int w, int cost) {
+        this.v = v;
+        this.w = w;
+        this.cost = cost;
+    }
+}
+
+public class Main {
+    static ArrayList<Edge> graph;
+    static final int INF = Integer.MAX_VALUE;
+
+    /**
+     *
+     * @param n: 정점의 개수
+     * @param m: 간선의 개수
+     * @param start: 출발지
+     */
+    public static boolean bellmanFord(int n, int m, int start){
+        int[] dist = new int[n+1];
+        Arrays.fill(dist, INF);
+        dist[start] = 0;
+
+
+        // 정점의 개수만큼 반복
+        for (int i = 0; i < n; i++) {
+            // 간선의 개수만큼 반복
+            for (int j = 0; j < m; j++) {
+                Edge edge = graph.get(j); //현재 간선
+
+                // 현재 간선의 들어오는 정점에 대해 비교
+                if(dist[edge.v] != INF && dist[edge.w] > dist[edge.v] + edge.cost){
+                    dist[edge.w] = dist[edge.v] + edge.cost;
+                }
+            }
+        }
+
+        // 음수 가중치 확인
+        for (int i = 0; i < m; i++) {
+            Edge edge = graph.get(i); //현재 간선
+
+            //현재 간선의 들어오는 정점에 대해 비교 -> 더 작은 값 생기면 음수 사이클 존재
+            if(dist[edge.v] != INF && dist[edge.w] > dist[edge.v] + edge.cost){
+                System.out.println("음수 사이클 존재");
+                return false;
+            }
+        }
+
+        //출력
+        for (int i = 1; i < dist.length; i++) {
+            if(dist[i] == INF){
+                System.out.println("INF ");
+            }else{
+                System.out.println(dist[i] + "");
+            }
+        }
+        return true;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        //정점의 개수, 간선의 개수
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+
+        graph = new ArrayList<>();
+
+        StringTokenizer st;
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int v = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+
+            graph.add(new Edge(v, w, cost));
+        }
+
+        bellmanFord(n,m,4);
+
+        br.close();
+        bw.close();
+    }
+
+}
