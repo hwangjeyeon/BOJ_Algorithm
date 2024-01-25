@@ -1,0 +1,67 @@
+// 플로이드-워셜 알고리즘 자바 구현
+// 최악의 시간복잡도 O(n^3)
+// 참고: https://velog.io/@suk13574/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98Java-%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%99%80%EC%83%ACFloyd-Warshall-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
+
+public class Main {
+    static final int INF = 1000000000;
+
+    public static void floydWarshall(int[][] graph, int n){
+        //경유지
+        for (int i = 1; i <= n; i++) {
+            //출발지
+            for (int j = 1; j <= n; j++) {
+                //도착지
+                for (int k = 1; k <= n; k++) {
+                    graph[j][k] = Math.min(graph[j][k], graph[j][i] + graph[i][k]);
+                }
+            }
+        }
+
+        //출력
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if(graph[i][j] == INF){
+                    System.out.print(0+" ");
+                } else {
+                    System.out.print(graph[i][j]+" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        //정점의 개수, 간선의 개수
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+
+        int[][] graph = new int[n + 1][n + 1];
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph.length; j++) {
+                if(i==j){
+                    continue;
+                }
+                graph[i][j] = INF;
+            }
+        }
+        StringTokenizer st;
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int v = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+
+            graph[v][w] = cost;
+        }
+
+        floydWarshall(graph,n);
+
+        br.close();
+        bw.close();
+    }
+
+}
