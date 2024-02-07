@@ -1,0 +1,68 @@
+// 조합 학습 및 구현
+// 참고: https://minhamina.tistory.com/38
+
+// 기초
+public static int combination1(int n, int r){
+    if(n==r || r==0){
+        return 1;
+    }else{
+        return combination1(n-1, r-1) + combination1(n-1, r);
+    }
+}
+
+// 백트래킹을 이용한 구현
+public static void comb1(int[] arr, boolean[] visited, int start, int r){
+        if(r==0){
+            for (int i = 0; i < arr.length; i++) {
+                if(visited[i]){
+                    System.out.print(arr[i] + " ");
+                }
+            }
+            System.out.println();
+            return;
+        }else{
+            for (int i = start; i < arr.length; i++) {
+                visited[i] = true;
+                comb1(arr, visited, i+1, r-1);
+                visited[i] = false;
+            }
+        }
+    }
+
+// 재귀를 이용한 구현
+public static void comb2(int[] arr, boolean[] visited, int depth, int r){
+    if(r==0){
+        for (int i = 0; i < arr.length; i++) {
+            if(visited[i]){
+                System.out.print(arr[i] + " ");
+            }
+        }
+        System.out.println();
+        return;
+    }
+    if(depth == arr.length){
+        return;
+    }else{
+        visited[depth] = true;
+        comb2(arr, visited, depth+1, r-1);
+        visited[depth] = false;
+        comb2(arr, visited, depth+1, r);
+    }
+}
+
+// visited 배열 쓰지 않고 정수 변수 index로 판별하는 구현
+public static void comb3(int[] arr, int index, int n, int r, int target){
+    if(r==0){
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+        return;
+    }else if(target == n){
+        return;
+    }else{
+        arr[index] = target;
+        comb3(arr, index+1, n, r-1, target+1);
+        comb3(arr, index, n, r, target+1);
+    }
+}
