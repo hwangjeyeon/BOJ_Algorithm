@@ -6,9 +6,9 @@ import java.util.*;
  * 풀이 과정:
  * - 고민과 풀이:
  * 재귀(백트래킹)
- * 1. 함수식 backtracking(n,m, depth, start)
+ * 1. 함수식 backtracking(n,m, depth)
  * 2. base condition if(m==depth)
- * 3. 재귀식 (n,m,depth+1, i+1)
+ * 3. 재귀식 (n,m,depth+1)
  *
  * - 이번에는 visited도 start 파라미터도 필요없다.
  *
