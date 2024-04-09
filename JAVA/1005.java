@@ -30,35 +30,6 @@ import java.util.*;
 
 public class Main {
 
-    // 임시 그래프
-    static List<Integer>[] node = new ArrayList[9];
-
-    // 그래프 노드 별, 진입차수
-    static int[] edge = new int[9];
-    static void topologicalSort(){
-        Queue<Integer> q = new LinkedList<>();
-
-        for (int i = 1; i < edge.length; i++) {
-            if(edge[i] == 0){
-                q.offer(i);
-            }
-        }
-
-        while(!q.isEmpty()){
-            int now = q.poll();
-            sb.append(now +" ");
-            List<Integer> list = node[now];
-            for (int i = 0; i < list.size(); i++) {
-                edge[list.get(i)]--;
-                if(edge[list.get(i)] == 0){
-                    q.offer(list.get(i));
-                }
-            }
-        }
-
-    }
-
-    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
