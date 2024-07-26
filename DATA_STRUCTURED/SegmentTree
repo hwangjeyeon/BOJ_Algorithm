@@ -24,7 +24,7 @@ class SegmentTree{
         tree[node] += diff;
         if(start != end){
             update(node*2, start, (start + end) / 2, idx, diff);
-            update(node*2, (start + end) / 2, end, idx, diff);
+            update(node*2 + 1, (start + end) / 2, end, idx, diff);
         }
     }
 
@@ -37,7 +37,7 @@ class SegmentTree{
             return tree[node];
         }
 
-        return sum(node*2, start, (start + end) / 2, left, right) + sum(node*2, (start + end) / 2 + 1, end, left, right);
+        return sum(node*2, start, (start + end) / 2, left, right) + sum(node*2 + 1, (start + end) / 2 + 1, end, left, right);
     }
 
 }
