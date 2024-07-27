@@ -1,0 +1,75 @@
+class Node{
+    Map<Character, Node> child;
+    boolean endOfWord;
+
+    public Node(){
+        this.child = new HashMap<>();
+        this.endOfWord = false;
+    }
+}
+
+
+class Trie{
+    Node root;
+
+    public Trie(){
+        root = new Node();
+    }
+
+    public void insert(String word){
+        Node node = this.root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            node.child.putIfAbsent(c, new Node());
+            node = node.child.get(c);
+        }
+        node.endOfWord = true;
+    }
+
+    public boolean search(String word){
+        Node node = this.root;
+
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if(node.child.containsKey(c)){
+                node = node.child.get(c);
+            }else{
+                return false;
+            }
+        }
+        return node.endOfWord;
+    }
+
+    public boolean delete(String word){
+        return delete(this.root, word, 0);
+    }
+
+    private boolean delete(Node node, String word, int idx){
+        char c = word.charAt(idx);
+
+        if(!node.child.containsKey(c)){
+            return false;
+        }
+
+        Node cur = node.child.get(c);
+        idx++;
+        if(idx == word.length()){
+            if(!cur.endOfWord){
+                return false;
+            }
+            cur.endOfWord = false;
+            if(cur.child.isEmpty()){
+                node.child.remove(c);
+            }
+        }else{
+            if(!delete(cur, word, idx)){
+                return false;
+            }
+
+            if(!cur.endOfWord && cur.child.isEmpty()){
+                node.child.remove(c);
+            }
+        }
+        return true;
+    }
+}
