@@ -51,16 +51,17 @@ public class Main {
             
             for(int i=0; i<4; i++){
                 
-                if(rotateChk(car, i)){
+                if(rotateChk(car)){
+                    
                     isFind = true;
                     ans++;
                     break;
                 }
             }
+            
             if(isFind){
                 continue;
             }
-
             boolean isOk = false;
             // 후진 로직
             if(rearChk(car)){
@@ -78,7 +79,7 @@ public class Main {
     }
 
     // 좌회전 했을 때의 방향에 해당하는 위치
-    private static boolean rotateChk(Car car, int num){
+    private static boolean rotateChk(Car car){
         int y;
         int x;
         int d;
@@ -99,10 +100,7 @@ public class Main {
             x = car.x;
             d = 2;
         }
-        if(num != 4){
-            car.d = d;
-        }
-    
+        car.d = d;
         if(!visited[y][x] && arr[y][x] != 1){
             car.y = y;
             car.x = x;
@@ -124,11 +122,11 @@ public class Main {
             y = car.y;
             x = car.x-1;
         }else if(car.d == 2){
-            y = car.y;
-            x = car.x+1;
-        }else{
             y = car.y-1;
             x = car.x;
+        }else{
+            y = car.y;
+            x = car.x+1;
         }
 
         if(arr[y][x] != 1){
