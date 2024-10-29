@@ -51,7 +51,7 @@ public class Main {
             
             for(int i=0; i<4; i++){
                 
-                if(rotateChk(car)){
+                if(rotateChk(car, i)){
                     isFind = true;
                     ans++;
                     break;
@@ -78,7 +78,7 @@ public class Main {
     }
 
     // 좌회전 했을 때의 방향에 해당하는 위치
-    private static boolean rotateChk(Car car){
+    private static boolean rotateChk(Car car, int num){
         int y;
         int x;
         int d;
@@ -99,7 +99,10 @@ public class Main {
             x = car.x;
             d = 2;
         }
-        car.d = d;
+        if(num != 4){
+            car.d = d;
+        }
+    
         if(!visited[y][x] && arr[y][x] != 1){
             car.y = y;
             car.x = x;
