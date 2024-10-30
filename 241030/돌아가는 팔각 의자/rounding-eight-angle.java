@@ -34,8 +34,14 @@ public class Main {
             rotate(arr, chk);
 
             // 12시 방향 남쪽지방 사람 착석 여부 확인
+            // for(int j=0; j< 4; j++){
+            //     for(int s=0; s<8; s++){
+            //         System.out.print(arr[j][s]);
+            //     }
+            //     System.out.println();
             
-
+            // }
+            // System.out.println();
         }
         ans = (Character.getNumericValue(arr[0][0]) == 1 ? 1 : 0) * 1 
         + (Character.getNumericValue(arr[1][0]) == 1 ? 1 : 0) * 2
@@ -103,7 +109,7 @@ public class Main {
             }
         }else if(n == 2){
             if(arr[0][2] != arr[1][6]){
-                chk[1] = -d;
+                chk[0] = -d;
             }
             int tmp = d;
             for(int i=1; i<3; i++){
