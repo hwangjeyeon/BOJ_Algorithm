@@ -47,7 +47,7 @@ public class Main {
             
 
             // 상단 회전
-            int last = lowMoving[0];
+            int last = lowMoving[n-1];
             boolean lastMan = visited[0];
             visited[0] = false;
             for(int i=0; i<n; i++){
@@ -62,7 +62,7 @@ public class Main {
             }
 
             // 하단 회전
-            for(int i=n-1; i>=0; i--){
+            for(int i=0; i<n; i++){
                 int tmp = lowMoving[i];
                 lowMoving[i] = last;
                 last = tmp;
