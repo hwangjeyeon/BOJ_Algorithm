@@ -1,0 +1,81 @@
+import java.io.*;
+import java.util.*;
+
+/**
+ * 풀이 과정:
+ * 1.백트래킹으로 쉽게 풀 수 있는 문제다
+ * 2. 반대는 생각하기 힘드니까 다시 반대로 생각해서 배치하면 된다. 그래서 .을 @로 배치해두낟
+ * 3. 그리고 시작지점과 종료지점을 찾은 다음 백트래킹을 돌린다
+ * 4. 상하좌우로 백트래킹을 돌리며, 종료지점에 도달하면 StringBuilder에 넣고 탈출한다
+ * 5. 완성된 결과를 출력하면 정답이 된다
+ *
+ * 해결방법:
+ *
+ * 시간복잡도: O(n^2)
+ * 공간복잡도: O(n^2)
+ *
+ */
+
+public class Main {
+
+    static int n;
+    static int m;
+    static char[][] arr;
+    static int[] dx = {0,0,-1,1};
+    static int[] dy = {-1,1,0,0};
+    static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        arr = new char[n][m];
+
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < m; j++) {
+                arr[i][j] = s.charAt(j) == '.' ? '@' : '+';
+            }
+        }
+        List<int[]> start = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if(arr[i][j] == '@' && (i == 0 || j == 0 || i == n-1 || j == m-1)){
+                    start.add(new int[] {i,j});
+                }
+            }
+        }
+        arr[start.get(0)[0]][start.get(0)[1]] = '.';
+        backtracking(start.get(0), start.get(1));
+
+        bw.write(sb.toString());
+        
+        br.close();
+        bw.close();
+    }
+
+    private static void backtracking(int[] now, int[] last) {
+        if(now[0] == last[0] && now[1] == last[1]){
+            arr[now[0]][now[1]] = '.';
+            for (int i = 0; i < n; i++) {
+                sb.append(arr[i]).append("\n");
+            }
+            return;
+        }
+        for (int i = 0; i < 4; i++) {
+            int ny = now[0] + dx[i];
+            int nx = now[1] + dy[i];
+            if(isRange(ny, nx) && arr[ny][nx] == '@'){
+                arr[ny][nx] = '.';
+                backtracking(new int[]{ny,nx}, last);
+                arr[ny][nx] = '@';
+            }
+        }
+
+    }
+
+    private static boolean isRange(int ny, int nx) {
+        return ny >=0 && ny < n && nx >=0 && nx < m;
+    }
+}
